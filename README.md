@@ -171,7 +171,7 @@ public class CalculatorTest {
         }
     }
 }
-	- 'return' je nepotreban kao poslednja izjava u metodi 'void'.
+	
 
 ---
 
