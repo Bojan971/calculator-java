@@ -68,6 +68,99 @@ Nepotrebna naredba „return“
 Prijavljuje naredbe return na kraju konstruktora i metoda koje vraćaju void. Ove naredbe su suvišne i mogu se bezbedno ukloniti.
 Ova inspekcija ne prikazuje JSP datoteke.
 	Calculator: 1 upozorenje
+
+# TEST RESULTS
+
+## Opis testiranja
+
+Izvršeno je sistemsko testiranje (black-box testing) kalkulator aplikacije.  
+Testiranje je obavljeno unosom različitih aritmetičkih izraza i analizom dobijenih rezultata.
+
+Cilj testiranja bio je da se proveri:
+- tačnost računanja
+- poštovanje prioriteta operacija
+- ponašanje pri neispravnim unosima
+- identifikacija potencijalnih grešaka i ograničenja sistema
+
+---
+
+## Pozitivni testovi (ispravni unosi)
+
+| Ulaz     | Očekivani rezultat | Dobijeni rezultat | Status |
+|----------|--------------------|-------------------|--------|
+| 4+5      |  9                 | 9.0               | ✅     |
+| 10+5*4+3 | 33                 | 33.0              | ✅     |
+| 10*2+5   | 25                 | 25.0              | ✅     |
+| 20/5+2   | 6                  | 6.0               | ✅     |
+| 2+3*4    | 14                 | 14.0              | ✅     |
+| 2.5+3.5  | 6.0                | 6.0               | ✅     |
+| -5+3     | -2                 | -2.0              | ✅     |
+| +5       |  5                 | 5.0               | ✅     |
+| 5+       |  5                 | 5.0               | ✅     | 
+| 5 + 3    | 8                  |8.0                | ✅     |
+
+### Zaključak:
+- Kalkulator ispravno izvršava osnovne aritmetičke operacije
+- Poštuje prioritet operacija (* i / pre + i -)
+- Podržava decimalne brojeve
+- Podržava razmake u izrazu
+
+---
+
+## Negativni testovi (neispravni unosi)
+
+| Ulaz | Očekivano | Dobijeno | Status |
+|------|----------|----------|--------|
+| 4++5 | ERROR    | ERROR    | ✅     |
+| abc  | ERROR    | ERROR    | ✅     |
+| ""   | ERROR    | ERROR    | ✅     |
+
+
+### Zaključak:
+- Aplikacija pravilno detektuje nevalidne izraze u većini slučajeva
+
+---
+
+## Edge case testovi (kritični scenariji)
+
+### 1. Deljenje sa nulom
+ 
+| Ulaz | Očekivano | Dobijeno | Status |
+|------|-----------|----------|--------|
+| 5/0  | ERROR     | Infinity | ❌     |
+
+Problem:  
+Umesto greške, aplikacija vraća `Infinity`.
+
+---
+
+### 2. Kombinacija operatora
+
+| Ulaz | Očekivano | Dobijeno | Status |
+|------|-----------|----------|--------|
+| 5+-3 | 2         | ERROR    | ❌     |
+
+Problem:  
+Aplikacija ne podržava kombinacije operatora.
+
+---
+
+## Jedinični test (Unit test)
+
+Primer unit testa za proveru metode `Calculate`:
+
+```java
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class CalculatorTest {
+
+    @Test
+    void testCalculateExpression() {
+        String result = Calculator.Run("2+3*4");
+        assertEquals("14.0", result);
+    }
+}
 	- 'return' je nepotreban kao poslednja izjava u metodi 'void'.
 
 ---
