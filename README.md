@@ -150,15 +150,25 @@ Aplikacija ne podržava kombinacije operatora.
 Primer unit testa za proveru metode `Calculate`:
 
 ```java
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-
 public class CalculatorTest {
 
-    @Test
-    void testCalculateExpression() {
-        String result = Calculator.Run("2+3*4");
-        assertEquals("14.0", result);
+    public static void main(String[] args) {
+
+        testCalculateExpression();
+
+    }
+
+    static void testCalculateExpression() {
+        String expected = "14.0";
+        String actual = Calculator.Run("2+3*4");
+
+        if (expected.equals(actual)) {
+            System.out.println("TEST PASSED ");
+        } else {
+            System.out.println("TEST FAILED ");
+            System.out.println("Expected: " + expected);
+            System.out.println("Actual: " + actual);
+        }
     }
 }
 	- 'return' je nepotreban kao poslednja izjava u metodi 'void'.
